@@ -1,5 +1,6 @@
 .DS_Store
+.vscode/
 lectures/
 assignments/triangle/
 assignments/part_a-files
-.vscode
+codes/loghub/
