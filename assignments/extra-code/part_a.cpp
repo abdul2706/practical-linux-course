@@ -11,10 +11,40 @@ int generate_random_within(int start, int end) {
     return (int)(number_generated * (end - start + 1)) + start;
 }
 
+void print_points(int *points, int rows, int cols) {
+    cout << "x, y";
+    if (cols == 3) {
+        cout << ", z";
+    }
+    cout << endl;
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            cout << points[i * cols + j];
+            if (j < cols - 1) {
+                cout << ", ";
+            }
+        }
+        cout << endl;
+    }
+}
+
+void get_axis_limits(int *limit_start, int *limit_end, string axis_name) {
+    cout << "Enter Start Limit for " << axis_name << ": ";
+    cin >> *limit_start;
+    cout << "Enter End Limit for" << axis_name << ": ";
+    cin >> *limit_end;
+    if (*limit_start > *limit_end) {
+        int temp = *limit_start;
+        *limit_start = *limit_end;
+        *limit_end = temp;
+    }
+}
+
 void save_points_to_file(string filename, int *points, int rows, int cols) {
     // .node files
     // First line: <# of vertices> <dimension (must be 2)> <# of attributes> <# of boundary markers (0 or 1)>
     // Remaining lines: <vertex #> <x> <y> [attributes] [boundary marker]
+    // FILE *filePointer = fopen(filename, "w");
     ofstream filePointer;
     filePointer.open(filename);
     if (filePointer == NULL) {
@@ -25,8 +55,10 @@ void save_points_to_file(string filename, int *points, int rows, int cols) {
         for (int i = 0; i < rows; i++) {
             filePointer << i + 1 << " ";
             for (int j = 0; j < cols; j++) {
+                // fprintf(filePointer, "%d", points[i * cols + j]);
                 filePointer << points[i * cols + j];
                 if (j < cols - 1) {
+                    // fprintf(filePointer, " ");
                     filePointer << " ";
                 }
             }
@@ -34,7 +66,7 @@ void save_points_to_file(string filename, int *points, int rows, int cols) {
         }
     }
     filePointer.close();
-    cout << "Points Saved in File " << filename << endl;
+    // cout << "Points Saved in File " << filename << endl;
 }
 
 void save_settings(int *total_points, int *dimensions, int *x_limit_start, int *x_limit_end, int *y_limit_start, int *y_limit_end, int *z_limit_start, int *z_limit_end) {
@@ -80,6 +112,7 @@ void load_settings(int *total_points, int *dimensions, int *x_limit_start, int *
     settings_file.close();
 }
 
+// example-1 $ ./part_a d=3 n=10000 xmin=-1000000 xmax=1000000 ymin=-1000000 ymax=1000000 zmin=-10000000 zmax=1000000
 int main(int argc, char **argv) {
     srand(0);
 
@@ -91,10 +124,13 @@ int main(int argc, char **argv) {
     } else {
         // initialize variables either using argv (which can be either given by user or loaded from settings file)
         string argv_i;
+        int index = 0;
+        // cout << "You have entered " << argc << " arguments" << endl;
         for (int i = 1; i < argc; ++i) {
             argv_i = string(argv[i]);
             string key = argv_i.substr(0, argv_i.find('=', 0));
             int value = stoi(argv_i.substr(argv_i.find('=', 0) + 1));
+            // cout << i << " " << argv[i] << ", " << key << ", " << value << endl;
             if (strcmp(key.c_str(), "n") == 0) {
                 total_points = value;
             } else if (strcmp(key.c_str(), "d") == 0) {

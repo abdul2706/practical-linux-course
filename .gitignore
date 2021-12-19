@@ -1,6 +1,8 @@
 .DS_Store
 .vscode/
 lectures/
-assignments/triangle/
-assignments/part_a-files
 codes/loghub/
+presentations/
+*.zip
+*.docx
+*.pdf
