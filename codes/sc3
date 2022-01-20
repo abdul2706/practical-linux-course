@@ -1,0 +1,7 @@
+old_filename=$1
+echo $old_filename X
+echo {$old_filename}X
+new_filename=${old_filename%.list}.directory
+echo $new_filename
+echo ${new_filename}
+echo ${old_filename%.phone} newphone

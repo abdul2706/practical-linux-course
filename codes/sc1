@@ -1,0 +1,6 @@
+echo There are $# command-line arguments
+echo The name of the script is: $0
+echo The first argument is: $1
+echo The first argument is: $2
+echo The first argument is: $3
+echo All arguments are: $*

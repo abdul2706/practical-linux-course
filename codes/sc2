@@ -1,0 +1,11 @@
+First=$1
+Second=$2
+Third=$3
+Fourth=*
+echo There are $# command-line arguments
+echo The name of the script is: $0
+echo The first argument is: $First
+echo The second argument is: $Second
+echo The third argument is: $Third
+echo All arguments are: $*
+echo $Fourth
